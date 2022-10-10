@@ -7,9 +7,20 @@ pipeline {
       }
     }
 
-    stage('list dirs') {
-      steps {
-        sh 'ls -la'
+    stage('log') {
+      parallel {
+        stage('log') {
+          steps {
+            sh 'ls -la'
+          }
+        }
+
+        stage('Front-end UT') {
+          steps {
+            sh 'cd curriculum-front && npm i && npm run test:unit'
+          }
+        }
+
       }
     }
 
