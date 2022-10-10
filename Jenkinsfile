@@ -8,19 +8,14 @@ pipeline {
     }
 
     stage('log') {
-      parallel {
-        stage('log') {
-          steps {
-            sh 'ls -la'
-          }
-        }
+      steps {
+        sh 'ls -la'
+      }
+    }
 
-        stage('Front-end UT') {
-          steps {
-            sh 'cd curriculum-front && npm i && npm run test:unit'
-          }
-        }
-
+    stage('Build Docker Image') {
+      steps {
+        sh 'docker build -f curriculum-front/Dockerfile'
       }
     }
 
